@@ -1,0 +1,13 @@
+{
+  "name": "vaktija.ba-node-api",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-rate-limit": "^3.2.0",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "moment-hijri": "^2.1.1"
+  }
+}
