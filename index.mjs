@@ -150,6 +150,8 @@ app.use((req, res) => {
   res.send({ error: "404 Not Found" });
 });
 
-app.listen(8080, () =>
+var port = process.env.PORT || 8080;
+
+app.listen(port, () =>
   console.log("Vaktija.ba API app listening on port 8080!"),
 );
