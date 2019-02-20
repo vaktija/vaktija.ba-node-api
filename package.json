@@ -8,6 +8,10 @@
     "express-rate-limit": "^3.2.0",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
-    "moment-hijri": "^2.1.1"
+    "moment-hijri": "^2.1.1",
+    "pm2": "^3.3.1"
+  },
+  "scripts": {
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   }
 }
