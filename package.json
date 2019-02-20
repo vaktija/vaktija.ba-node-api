@@ -12,6 +12,6 @@
     "pm2": "^3.3.1"
   },
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "node --experimental-modules index.mjs"
   }
 }
