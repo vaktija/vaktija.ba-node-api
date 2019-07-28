@@ -92,7 +92,7 @@ app.get("/vaktija", (req, res) => res.send(`
                   <meta name="keywords"
                         content="vaktija, vaktija 2019, vaktija za 2019, vaktija bih, vaktija za bih, vaktija bosna i hercegovina, vaktija za bosnu i hercegovinu, vaktija sandžak, vaktija za sandžak, vaktija za sarajevo, vaktija za zenicu, vaktija za tuzlu, vaktija za bihać, vaktija za mostar, vaktija za banja luku, vaktija za travnik, vaktija sabah, vaktija podne, vaktija ikindija, vaktija akšam, vaktija jacija, takvim, takvim 2019, takvim za 2019, takvim bih, takvim za bih, takvim bosna i hercegovina, takvim za bosnu i hercegovinu, takvim za sarajevo, takvim za zenicu, takvim za tuzlu, takvim za bihać, takvim za mostar, takvim za banja luku, takvim za travnik, takvim sabah, takvim podne, takvim ikindija, takvim akšam, takvim jacija">
               </head>
-              <body>
+              <body style="font-family: Arial, Helvetica">
                   <div id="root"><h1>/vaktija</h1>
                   <a href="/vaktija/v1">/v1</a>
                 </div>
@@ -140,7 +140,7 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                   <meta name="keywords"
                         content="vaktija, vaktija 2019, vaktija za 2019, vaktija bih, vaktija za bih, vaktija bosna i hercegovina, vaktija za bosnu i hercegovinu, vaktija sandžak, vaktija za sandžak, vaktija za sarajevo, vaktija za zenicu, vaktija za tuzlu, vaktija za bihać, vaktija za mostar, vaktija za banja luku, vaktija za travnik, vaktija sabah, vaktija podne, vaktija ikindija, vaktija akšam, vaktija jacija, takvim, takvim 2019, takvim za 2019, takvim bih, takvim za bih, takvim bosna i hercegovina, takvim za bosnu i hercegovinu, takvim za sarajevo, takvim za zenicu, takvim za tuzlu, takvim za bihać, takvim za mostar, takvim za banja luku, takvim za travnik, takvim sabah, takvim podne, takvim ikindija, takvim akšam, takvim jacija">
               </head>
-              <body>
+              <body style="font-family: Arial, Helvetica">
                   <div id="root">
                       <div>
                         <h1>vaktija.ba v1 API</h1>
