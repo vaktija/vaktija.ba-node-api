@@ -53,40 +53,118 @@ app.get("/", (req, res) => res.send({
 }));
 
 app.get("/vaktija", (req, res) => res.send(`
-<h1>/vaktija</h1>
-<a href="/vaktija/v1">/v1</a>
+
+<!doctype html>
+            <html lang="">
+              <head>
+                  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                  <meta charset="utf-8" />
+                  
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <meta name="theme-color" content="#fff" />
+
+                  <meta property="og:url" content="http://www.vaktija.ba"/>
+                  <meta property="og:type" content="website"/>
+                  <meta property="og:title" content="Vaktija za Bosnu i Hercegovinu"/>
+                  <meta property="og:description" content="Vaktija za Bosnu i Hercegovinu"/>
+                  <meta property="og:image" content="http://www.vaktija.ba/img/logo.png"/>
+              
+                  <meta name="twitter:card" content="summary_large_image">
+                  <meta name="twitter:title" content="Vaktija za Bosnu i Hercegovinu">
+                  <meta name="twitter:image" content="https://www.vaktija.ba/img/logo.png">
+                  <meta name="twitter:description" content="Vaktija za Bosnu i Hercegovinu">
+
+                  <meta http-equiv="refresh" content="21600">
+
+                  <meta name="apple-itunes-app" content="app-id=1095343967">
+
+                  <link rel="icon" href="/favicon.png">
+
+                  <link rel="apple-touch-icon" href="/img/icon.png">
+                  <link rel="apple-touch-startup-image" href="/img/icon.png">
+                  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+
+                  <meta name="msapplication-TileColor" content="#FFFFFF"/>
+                  <meta name="msapplication-TileImage" content="/img/icon.png"/>
+                  <meta name="msapplication-config" content="none"/>
+                  <meta name="application-name" content="Vaktija za Bosnu i Hercegovinu"/>
+
+                  <meta name="keywords"
+                        content="vaktija, vaktija 2019, vaktija za 2019, vaktija bih, vaktija za bih, vaktija bosna i hercegovina, vaktija za bosnu i hercegovinu, vaktija sandžak, vaktija za sandžak, vaktija za sarajevo, vaktija za zenicu, vaktija za tuzlu, vaktija za bihać, vaktija za mostar, vaktija za banja luku, vaktija za travnik, vaktija sabah, vaktija podne, vaktija ikindija, vaktija akšam, vaktija jacija, takvim, takvim 2019, takvim za 2019, takvim bih, takvim za bih, takvim bosna i hercegovina, takvim za bosnu i hercegovinu, takvim za sarajevo, takvim za zenicu, takvim za tuzlu, takvim za bihać, takvim za mostar, takvim za banja luku, takvim za travnik, takvim sabah, takvim podne, takvim ikindija, takvim akšam, takvim jacija">
+              </head>
+              <body style="font-family: Arial, Helvetica">
+                  <div id="root"><h1>/vaktija</h1>
+                  <a href="/vaktija/v1">/v1</a>
+                </div>
+              </body>
+            </html>
 `));
 
 app.get("/vaktija/v1", (req, res) => res.send(`
-<div>
-  <div>
-    <h1>vaktija.ba v1 API primjeri</h1>
-    <p>Sarajevo, danas (default)</p>
-    <h2>http://api.vaktija.ba/</h2>
-    <p>
-        {"datum":["27. zu-l-ka'de 1440","utorak, 30. juli
-        2019"],"vakat":["2:21","4:25","11:54","15:53","19:19","21:07"]}
-    </p>
-  </div>
-    <h3>/vaktija/v1/:lokacija</h3>
-    <p>http://api.vaktija.ba/vaktija/v1/77</p>
-    <h3>/vaktija/v1/:lokacija/:godina</h3>
-    <p>http://api.vaktija.ba/vaktija/v1/77/2019</p>
-    <h3>/vaktija/v1/:lokacija/:godina/:mjesec</h3>
-    <p>http://api.vaktija.ba/vaktija/v1/77/2019/7</p>
-    <h3>/vaktija/v1/:lokacija/:godina/:mjesec/:dan</h3>
-    <p>http://api.vaktija.ba/vaktija/v1/77/2019/7/30</p>
-  <div>
-    <h2>Trenutno dostupne lokacije (Number)</h2>
-    <p>/vaktija/v1/lokacije</p>
-  </div>
-  <div>
-    <ol start=0">
-    ${lokacija().lokacija.map(l => `<li>${l}</li>`).join('')}
-    </ol>
-  </div>
-</div>
 
+<!doctype html>
+            <html lang="">
+              <head>
+                  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                  <meta charset="utf-8" />
+
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <meta name="theme-color" content="#fff" />
+
+                  <meta property="og:url" content="http://www.vaktija.ba"/>
+                  <meta property="og:type" content="website"/>
+                  <meta property="og:title" content="Vaktija za Bosnu i Hercegovinu"/>
+                  <meta property="og:description" content="Vaktija za Bosnu i Hercegovinu"/>
+                  <meta property="og:image" content="http://www.vaktija.ba/img/logo.png"/>
+              
+                  <meta name="twitter:card" content="summary_large_image">
+                  <meta name="twitter:title" content="Vaktija za Bosnu i Hercegovinu">
+                  <meta name="twitter:image" content="https://www.vaktija.ba/img/logo.png">
+                  <meta name="twitter:description" content="Vaktija za Bosnu i Hercegovinu">
+
+                  <meta http-equiv="refresh" content="21600">
+
+                  <meta name="apple-itunes-app" content="app-id=1095343967">
+
+                  <link rel="icon" href="/favicon.png">
+
+                  <link rel="apple-touch-icon" href="/img/icon.png">
+                  <link rel="apple-touch-startup-image" href="/img/icon.png">
+                  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+
+                  <meta name="msapplication-TileColor" content="#FFFFFF"/>
+                  <meta name="msapplication-TileImage" content="/img/icon.png"/>
+                  <meta name="msapplication-config" content="none"/>
+                  <meta name="application-name" content="Vaktija za Bosnu i Hercegovinu"/>
+
+                  <meta name="keywords"
+                        content="vaktija, vaktija 2019, vaktija za 2019, vaktija bih, vaktija za bih, vaktija bosna i hercegovina, vaktija za bosnu i hercegovinu, vaktija sandžak, vaktija za sandžak, vaktija za sarajevo, vaktija za zenicu, vaktija za tuzlu, vaktija za bihać, vaktija za mostar, vaktija za banja luku, vaktija za travnik, vaktija sabah, vaktija podne, vaktija ikindija, vaktija akšam, vaktija jacija, takvim, takvim 2019, takvim za 2019, takvim bih, takvim za bih, takvim bosna i hercegovina, takvim za bosnu i hercegovinu, takvim za sarajevo, takvim za zenicu, takvim za tuzlu, takvim za bihać, takvim za mostar, takvim za banja luku, takvim za travnik, takvim sabah, takvim podne, takvim ikindija, takvim akšam, takvim jacija">
+              </head>
+              <body style="font-family: Arial, Helvetica">
+                  <div id="root">
+                      <h1>vaktija.ba v1 API primjeri</h1>
+                        <p>Sarajevo, danas (default)</p>
+                      <h2>http://api.vaktija.ba/</h2>
+                        <code>
+                            {"datum":["27. zu-l-ka'de 1440","utorak, 30. juli
+                            2019"],"vakat":["2:21","4:25","11:54","15:53","19:19","21:07"]}
+                        </code>
+                        <h3>/vaktija/v1/:lokacija</h3>
+                          <p>http://api.vaktija.ba/vaktija/v1/77</p>
+                        <h3>/vaktija/v1/:lokacija/:godina</h3>
+                          <p>http://api.vaktija.ba/vaktija/v1/77/2019</p>
+                        <h3>/vaktija/v1/:lokacija/:godina/:mjesec</h3>
+                          <p>http://api.vaktija.ba/vaktija/v1/77/2019/7</p>
+                        <h3>/vaktija/v1/:lokacija/:godina/:mjesec/:dan</h3>
+                          <p>http://api.vaktija.ba/vaktija/v1/77/2019/7/30</p>
+                      <h2>Trenutno dostupne lokacije (Number)</h2>
+                        <p>/vaktija/v1/lokacije</p>
+                          <ol start=0">
+                          ${lokacija().lokacija.map(l => `<li>${l}</li>`).join('')}
+                          </ol>
+                  </div>
+              </body>
+            </html>
 `));
 
 app.get("/vaktija/v1/lokacije", (req, res, next) => {
