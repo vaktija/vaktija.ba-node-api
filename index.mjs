@@ -63,15 +63,15 @@ app.get("/vaktija", (req, res) => res.send(`
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <meta name="theme-color" content="#fff" />
 
-                  <meta property="og:url" content="http://www.vaktija.ba"/>
+                  <meta property="og:url" content="https://vaktija.ba"/>
                   <meta property="og:type" content="website"/>
                   <meta property="og:title" content="Vaktija za Bosnu i Hercegovinu"/>
                   <meta property="og:description" content="Vaktija za Bosnu i Hercegovinu"/>
-                  <meta property="og:image" content="http://www.vaktija.ba/img/logo.png"/>
+                  <meta property="og:image" content="https://vaktija.ba/logo.png"/>
               
                   <meta name="twitter:card" content="summary_large_image">
                   <meta name="twitter:title" content="Vaktija za Bosnu i Hercegovinu">
-                  <meta name="twitter:image" content="https://www.vaktija.ba/img/logo.png">
+                  <meta name="twitter:image" content="https://vaktija.ba/logo.png">
                   <meta name="twitter:description" content="Vaktija za Bosnu i Hercegovinu">
 
                   <meta http-equiv="refresh" content="21600">
@@ -80,12 +80,12 @@ app.get("/vaktija", (req, res) => res.send(`
 
                   <link rel="icon" href="/favicon.png">
 
-                  <link rel="apple-touch-icon" href="/img/icon.png">
-                  <link rel="apple-touch-startup-image" href="/img/icon.png">
+                  <link rel="apple-touch-icon" href="/icon.png">
+                  <link rel="apple-touch-startup-image" href="/icon.png">
                   <meta name="apple-mobile-web-app-status-bar-style" content="white">
 
                   <meta name="msapplication-TileColor" content="#FFFFFF"/>
-                  <meta name="msapplication-TileImage" content="/img/icon.png"/>
+                  <meta name="msapplication-TileImage" content="/icon.png"/>
                   <meta name="msapplication-config" content="none"/>
                   <meta name="application-name" content="Vaktija za Bosnu i Hercegovinu"/>
 
@@ -111,15 +111,15 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <meta name="theme-color" content="#fff" />
 
-                  <meta property="og:url" content="http://www.vaktija.ba"/>
+                  <meta property="og:url" content="https://vaktija.ba"/>
                   <meta property="og:type" content="website"/>
                   <meta property="og:title" content="Vaktija za Bosnu i Hercegovinu"/>
                   <meta property="og:description" content="Vaktija za Bosnu i Hercegovinu"/>
-                  <meta property="og:image" content="http://www.vaktija.ba/img/logo.png"/>
+                  <meta property="og:image" content="https://vaktija.ba/logo.png"/>
               
                   <meta name="twitter:card" content="summary_large_image">
                   <meta name="twitter:title" content="Vaktija za Bosnu i Hercegovinu">
-                  <meta name="twitter:image" content="https://www.vaktija.ba/img/logo.png">
+                  <meta name="twitter:image" content="https://vaktija.ba/logo.png">
                   <meta name="twitter:description" content="Vaktija za Bosnu i Hercegovinu">
 
                   <meta http-equiv="refresh" content="21600">
@@ -128,12 +128,12 @@ app.get("/vaktija/v1", (req, res) => res.send(`
 
                   <link rel="icon" href="/favicon.png">
 
-                  <link rel="apple-touch-icon" href="/img/icon.png">
-                  <link rel="apple-touch-startup-image" href="/img/icon.png">
+                  <link rel="apple-touch-icon" href="/icon.png">
+                  <link rel="apple-touch-startup-image" href="/icon.png">
                   <meta name="apple-mobile-web-app-status-bar-style" content="white">
 
                   <meta name="msapplication-TileColor" content="#FFFFFF"/>
-                  <meta name="msapplication-TileImage" content="/img/icon.png"/>
+                  <meta name="msapplication-TileImage" content="/icon.png"/>
                   <meta name="msapplication-config" content="none"/>
                   <meta name="application-name" content="Vaktija za Bosnu i Hercegovinu"/>
 
@@ -144,19 +144,19 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                   <div id="root">
                       <h1>vaktija.ba v1 API primjeri</h1>
                         <p>Sarajevo, danas (default)</p>
-                      <h2>http://api.vaktija.ba/</h2>
+                      <h2>https://api.vaktija.ba/</h2>
                         <code>
                             {"datum":["27. zu-l-ka'de 1440","utorak, 30. juli
                             2019"],"vakat":["2:21","4:25","11:54","15:53","19:19","21:07"]}
                         </code>
                         <h3>/vaktija/v1/:lokacija</h3>
-                          <p>http://api.vaktija.ba/vaktija/v1/77</p>
+                          <p>https://api.vaktija.ba/vaktija/v1/77</p>
                         <h3>/vaktija/v1/:lokacija/:godina</h3>
-                          <p>http://api.vaktija.ba/vaktija/v1/77/2019</p>
+                          <p>https://api.vaktija.ba/vaktija/v1/77/2019</p>
                         <h3>/vaktija/v1/:lokacija/:godina/:mjesec</h3>
-                          <p>http://api.vaktija.ba/vaktija/v1/77/2019/7</p>
+                          <p>https://api.vaktija.ba/vaktija/v1/77/2019/7</p>
                         <h3>/vaktija/v1/:lokacija/:godina/:mjesec/:dan</h3>
-                          <p>http://api.vaktija.ba/vaktija/v1/77/2019/7/30</p>
+                          <p>https://api.vaktija.ba/vaktija/v1/77/2019/7/30</p>
                       <h2>Trenutno dostupne lokacije (Number)</h2>
                         <p>/vaktija/v1/lokacije</p>
                           <ol start=0">
