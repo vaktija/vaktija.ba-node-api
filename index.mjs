@@ -1,7 +1,7 @@
 import express from "express";
 import "moment-duration-format";
 import moment from "moment-hijri";
-import "moment/locale/bs";
+// import "moment/locale/bs";
 import rateLimit from 'express-rate-limit';
 
 import { godisnja, mjesecna, dnevna, lokacija } from "./api/vaktija/index.mjs";
@@ -45,6 +45,7 @@ app.use((req, res, next) => {
 // app.get("/", (req, res) => res.send("vaktija.ba API"));
 
 app.get("/", (req, res) => res.send({
+  lokacija: "Sarajevo",
   datum: [
     moment().format("iD. iMMMM iYYYY").toLowerCase(),
     moment().format('dddd, D. MMMM YYYY')
@@ -146,8 +147,21 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                         <p>Sarajevo, danas (default)</p>
                       <h2>https://api.vaktija.ba/</h2>
                         <code>
-                            {"datum":["27. zu-l-ka'de 1440","utorak, 30. juli
-                            2019"],"vakat":["2:21","4:25","11:54","15:53","19:19","21:07"]}
+                        {
+                          "lokacija": "Sarajevo",
+                          "datum": [
+                            "7. zu-l-hidždže 1440",
+                            "četvrtak, 8. august 2019"
+                          ],
+                          "vakat": [
+                            "3:38",
+                            "5:35",
+                            "12:53",
+                            "16:48",
+                            "20:08",
+                            "21:50"
+                          ]
+                        }
                         </code>
                         <h3>/vaktija/v1/:lokacija</h3>
                           <p>https://api.vaktija.ba/vaktija/v1/77</p>
@@ -158,7 +172,8 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                         <h3>/vaktija/v1/:lokacija/:godina/:mjesec/:dan</h3>
                           <p>https://api.vaktija.ba/vaktija/v1/77/2019/7/30</p>
                       <h2>Trenutno dostupne lokacije (Number)</h2>
-                        <p>/vaktija/v1/lokacije</p>
+                        <h3>/vaktija/v1/lokacije</h3>
+                        <p>https://api.vaktija.ba/vaktija/v1/lokacije</p>
                           <ol start=0">
                           ${lokacija().lokacija.map(l => `<li>${l}</li>`).join('')}
                           </ol>
@@ -177,7 +192,8 @@ app.get("/vaktija/v1/:location", (req, res, next) => {
   let { location } = req.params;
 
   res.send({
-    lokacija: Number(location),
+    id: Number(location),
+    lokacija: lokacija().lokacija[location],
     datum: [
       moment().format("iD. iMMMM iYYYY").toLowerCase(),
       moment().format('dddd, D. MMMM YYYY')
@@ -191,7 +207,8 @@ app.get("/vaktija/v1/:location/:year", (req, res, next) => {
   let { location, year } = req.params;
 
   res.send({
-    lokacija: Number(location),
+    id: Number(location),
+    lokacija: lokacija().lokacija[location],
     godina: Number(year),
     mjesec: godisnja(location, year).mjesec
   }
@@ -203,7 +220,8 @@ app.get("/vaktija/v1/:location/:year/:month", (req, res, next) => {
   let { location, year, month } = req.params;
 
   res.send({
-    lokacija: Number(location),
+    id: Number(location),
+    lokacija: lokacija().lokacija[location],
     godina: Number(year),
     mjesec: Number(month),
     dan: mjesecna(location, year, month).dan
@@ -215,7 +233,8 @@ app.get("/vaktija/v1/:location/:year/:month/:day", (req, res, next) => {
   let { location, year, month, day } = req.params;
 
   res.send({
-    lokacija: Number(location),
+    id: Number(location),
+    lokacija: lokacija().lokacija[location],
     godina: Number(year),
     mjesec: Number(month),
     dan: Number(day),

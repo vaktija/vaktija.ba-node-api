@@ -1,7 +1,7 @@
-import { dnevna } from './dnevna';
-import { mjesecna } from './mjesecna';
-import { godisnja } from './godisnja';
-import { lokacija } from './lokacija';
+import { dnevna } from './dnevna.mjs';
+import { mjesecna } from './mjesecna.mjs';
+import { godisnja } from './godisnja.mjs';
+import { lokacija } from './lokacija.mjs';
 
 const vaktija = {
     dnevna,
