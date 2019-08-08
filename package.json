@@ -4,13 +4,14 @@
   "main": "index.mjs",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3",
-    "express-rate-limit": "^3.2.0",
-    "moment": "^2.22.2",
-    "moment-duration-format": "^2.2.2",
-    "moment-hijri": "^2.1.1",
-    "pm2": "^3.3.1"
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.0.0",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "moment-hijri": "^2.1.2",
+    "pm2": "^3.5.1"
   },
+  "type": "module",
   "scripts": {
     "start": "node --experimental-modules index.mjs"
   }
