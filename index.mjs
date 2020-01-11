@@ -37,8 +37,21 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // next();
+
+  res.set('Access-Control-Allow-Origin', '*');
+  // res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With, auth_token, X-CSRF-Token, Authorization');
+  res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With');
+  // res.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
+  res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  // res.set('Access-Control-Allow-Credentials', 'true');
+
+  // intercept OPTIONS method
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
   next();
 });
 
