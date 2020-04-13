@@ -2,7 +2,8 @@ import express from "express";
 import "moment-duration-format";
 import moment from "moment-hijri";
 // import "moment/locale/bs";
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
+import Feed from "feed";
 
 import { godisnja, mjesecna, dnevna, lokacija } from "./api/vaktija/index.mjs";
 
@@ -30,8 +31,135 @@ const app = express();
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Previse pokusaja, pokusajte malo kasnije ili kontaktirajte info@vaktija.ba za vise informacija.'
+  message:
+    "Previse pokusaja, pokusajte malo kasnije ili kontaktirajte info@vaktija.ba za vise informacija."
 });
+
+const feed = new Feed.Feed({
+  title: "Vaktija.ba",
+  description: "Vaktija za Bosnu i Hercegovinu",
+  id: "https://vaktija.ba",
+  link: "https://vaktija.ba",
+  language: "en",
+  image: "http://vaktija.ba/icon.png",
+  favicon: "https://vaktija.ba/favicon.ico",
+  // copyright: "Vaktija.ba 2020",
+  // updated: new Date(), // optional, default = today
+  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
+  feedLinks: {
+    // json: "https://api.vaktija.ba"
+    // atom: "https://vaktija.com/atom"
+  },
+  author: {
+    name: "Vaktija.ba",
+    email: "info@vaktija.ba",
+    link: "https://vaktija.ba"
+  }
+});
+
+const feed2 = new Feed.Feed({
+  title: "Vaktija.ba",
+  description: "Vaktija za Bosnu i Hercegovinu",
+  id: "https://vaktija.ba",
+  link: "https://vaktija.ba",
+  language: "en",
+  image: "http://vaktija.ba/icon.png",
+  favicon: "https://vaktija.ba/favicon.ico",
+  // copyright: "Vaktija.ba 2020",
+  // updated: new Date(), // optional, default = today
+  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
+  feedLinks: {
+    // json: "https://api.vaktija.ba"
+    // atom: "https://vaktija.com/atom"
+  },
+  author: {
+    name: "Vaktija.ba",
+    email: "info@vaktija.ba",
+    link: "https://vaktija.ba"
+  }
+});
+
+feed2.addItem({
+  title: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
+  id: "https://vaktija.ba",
+  link: "https://vaktija.ba",
+  description:
+    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05",
+  content:
+    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05"
+  // date: vakt.date
+  // image: vakt.image
+});
+
+const myVakts = [
+  {
+    title: "Sarajevo",
+    url: "https://vaktija.ba",
+    description: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
+    content: "pon, 13. april 2020 / 20. ša'ban 1441"
+  },
+  {
+    title: "Zora",
+    url: "https://vaktija.ba",
+    description: "Zora 04:16",
+    content: "04:16"
+  },
+  {
+    title: "Izlazak sunca",
+    url: "https://vaktija.ba",
+    description: "Izlazak sunca 06:02",
+    content: "06:02"
+  },
+  {
+    title: "Podne",
+    url: "https://vaktija.ba",
+    description: "Podne 12:48",
+    content: "12:48"
+  },
+  {
+    title: "Ikindija",
+    url: "https://vaktija.ba",
+    description: "Ikindija 16:31",
+    content: "16:31"
+  },
+  {
+    title: "Akšam",
+    url: "https://vaktija.ba",
+    description: "Akšam 19:33",
+    content: "19:33"
+  },
+  {
+    title: "Jacija",
+    url: "https://vaktija.ba",
+    description: "Jacija 21:05",
+    content: "21:05"
+  }
+];
+
+let vakts = [...myVakts];
+vakts.forEach(vakt => {
+  feed.addItem({
+    title: vakt.title,
+    id: vakt.url,
+    link: vakt.url,
+    description: vakt.description,
+    content: vakt.content
+    // date: vakt.date
+    // image: vakt.image
+  });
+});
+
+feed.addCategory("Religion");
+feed2.addCategory("Religion");
+
+// console.log(feed.rss2());
+// Output: RSS 2.0
+
+// console.log(feed.atom1());
+// Output: Atom 1.0
+
+// console.log(feed.json1());
+// Output: JSON Feed 1.0
 
 //  apply to all requests
 app.use(limiter);
@@ -41,15 +169,18 @@ app.use((req, res, next) => {
   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   // next();
 
-  res.set('Access-Control-Allow-Origin', '*');
+  res.set("Access-Control-Allow-Origin", "*");
   // res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With, auth_token, X-CSRF-Token, Authorization');
-  res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With');
+  res.set(
+    "Access-Control-Allow-Headers",
+    "Origin, Accept, Content-Type, X-Requested-With"
+  );
   // res.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
-  res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
   // res.set('Access-Control-Allow-Credentials', 'true');
 
   // intercept OPTIONS method
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
   next();
@@ -57,16 +188,19 @@ app.use((req, res, next) => {
 
 // app.get("/", (req, res) => res.send("vaktija.ba API"));
 
-app.get("/", (req, res) => res.send({
-  lokacija: "Sarajevo",
-  datum: [
-    moment().format("iD. iMMMM iYYYY").toLowerCase(),
-    moment().format('dddd, D. MMMM YYYY')
-  ],
-  vakat: dnevna().vakat
-}));
+app.get("/", (req, res) =>
+  res.send({
+    lokacija: "Sarajevo",
+    datum: [
+      moment().format("iD. iMMMM iYYYY").toLowerCase(),
+      moment().format("dddd, D. MMMM YYYY")
+    ],
+    vakat: dnevna().vakat
+  })
+);
 
-app.get("/vaktija", (req, res) => res.send(`
+app.get("/vaktija", (req, res) =>
+  res.send(`
 
 <!doctype html>
             <html lang="">
@@ -112,9 +246,21 @@ app.get("/vaktija", (req, res) => res.send(`
                 </div>
               </body>
             </html>
-`));
+`)
+);
 
-app.get("/vaktija/v1", (req, res) => res.send(`
+app.get("/rss", (req, res) => {
+  res.type("application/xml");
+  res.send(feed.rss2());
+});
+
+app.get("/rss2", (req, res) => {
+  res.type("application/xml");
+  res.send(feed2.rss2());
+});
+
+app.get("/vaktija/v1", (req, res) =>
+  res.send(`
 
 <!doctype html>
             <html lang="">
@@ -188,16 +334,19 @@ app.get("/vaktija/v1", (req, res) => res.send(`
                         <h3>/vaktija/v1/lokacije</h3>
                         <p>https://api.vaktija.ba/vaktija/v1/lokacije</p>
                           <ol start=0">
-                          ${lokacija().lokacija.map(l => `<li>${l}</li>`).join('')}
+                          ${lokacija()
+                            .lokacija.map(l => `<li>${l}</li>`)
+                            .join("")}
                           </ol>
                   </div>
               </body>
             </html>
-`));
+`)
+);
 
 app.get("/vaktija/v1/lokacije", (req, res, next) => {
   // res.send("spisak lokacija")
-  res.send(lokacija().lokacija)
+  res.send(lokacija().lokacija);
 });
 
 app.get("/vaktija/v1/:location", (req, res, next) => {
@@ -209,10 +358,10 @@ app.get("/vaktija/v1/:location", (req, res, next) => {
     lokacija: lokacija().lokacija[location],
     datum: [
       moment().format("iD. iMMMM iYYYY").toLowerCase(),
-      moment().format('dddd, D. MMMM YYYY')
+      moment().format("dddd, D. MMMM YYYY")
     ],
     vakat: dnevna(location).vakat
-  })
+  });
 });
 
 app.get("/vaktija/v1/:location/:year", (req, res, next) => {
@@ -224,8 +373,7 @@ app.get("/vaktija/v1/:location/:year", (req, res, next) => {
     lokacija: lokacija().lokacija[location],
     godina: Number(year),
     mjesec: godisnja(location, year).mjesec
-  }
-  )
+  });
 });
 
 app.get("/vaktija/v1/:location/:year/:month", (req, res, next) => {
@@ -238,7 +386,7 @@ app.get("/vaktija/v1/:location/:year/:month", (req, res, next) => {
     godina: Number(year),
     mjesec: Number(month),
     dan: mjesecna(location, year, month).dan
-  })
+  });
 });
 
 app.get("/vaktija/v1/:location/:year/:month/:day", (req, res, next) => {
@@ -252,17 +400,19 @@ app.get("/vaktija/v1/:location/:year/:month/:day", (req, res, next) => {
     mjesec: Number(month),
     dan: Number(day),
     datum: [
-      moment([year, month - 1, day]).format("iD. iMMMM iYYYY").toLowerCase(),
-      moment([year, month - 1, day]).format('dddd, D. MMMM YYYY')
+      moment([year, month - 1, day])
+        .format("iD. iMMMM iYYYY")
+        .toLowerCase(),
+      moment([year, month - 1, day]).format("dddd, D. MMMM YYYY")
     ],
     vakat: dnevna(location, year, month, day).vakat
   });
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Pogresan unos!')
-})
+  console.error(err.stack);
+  res.status(500).send("Pogresan unos!");
+});
 
 app.use((req, res) => {
   res.status(404);
@@ -272,5 +422,5 @@ app.use((req, res) => {
 var port = process.env.PORT || 8080;
 
 app.listen(port, () =>
-  console.log("Vaktija.ba API app listening on port 8080!"),
+  console.log("Vaktija.ba API app listening on port 8080!")
 );
