@@ -105,43 +105,43 @@ const myVakts = [
   {
     title: "Sarajevo",
     url: "https://vaktija.ba",
-    description: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
+    description: "pon, 13. april 2020 / 20. ša'ban 1441",
     content: "pon, 13. april 2020 / 20. ša'ban 1441"
   },
   {
     title: "Zora",
     url: "https://vaktija.ba",
-    description: "Zora 04:16",
+    description: "04:16",
     content: "04:16"
   },
   {
     title: "Izlazak sunca",
     url: "https://vaktija.ba",
-    description: "Izlazak sunca 06:02",
+    description: "06:02",
     content: "06:02"
   },
   {
     title: "Podne",
     url: "https://vaktija.ba",
-    description: "Podne 12:48",
+    description: "12:48",
     content: "12:48"
   },
   {
     title: "Ikindija",
     url: "https://vaktija.ba",
-    description: "Ikindija 16:31",
+    description: "16:31",
     content: "16:31"
   },
   {
     title: "Akšam",
     url: "https://vaktija.ba",
-    description: "Akšam 19:33",
+    description: "19:33",
     content: "19:33"
   },
   {
     title: "Jacija",
     url: "https://vaktija.ba",
-    description: "Jacija 21:05",
+    description: "21:05",
     content: "21:05"
   }
 ];
