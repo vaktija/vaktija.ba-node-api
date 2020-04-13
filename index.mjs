@@ -79,16 +79,26 @@ const feed2 = new Feed.Feed({
   }
 });
 
-feed2.addItem({
-  title: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
+const feed3 = new Feed.Feed({
+  title: "Vaktija.ba",
+  description: "Vaktija za Bosnu i Hercegovinu",
   id: "https://vaktija.ba",
   link: "https://vaktija.ba",
-  description:
-    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05",
-  content:
-    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05"
-  // date: vakt.date
-  // image: vakt.image
+  language: "en",
+  image: "http://vaktija.ba/icon.png",
+  favicon: "https://vaktija.ba/favicon.ico",
+  // copyright: "Vaktija.ba 2020",
+  // updated: new Date(), // optional, default = today
+  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
+  feedLinks: {
+    // json: "https://api.vaktija.ba"
+    // atom: "https://vaktija.com/atom"
+  },
+  author: {
+    name: "Vaktija.ba",
+    email: "info@vaktija.ba",
+    link: "https://vaktija.ba"
+  }
 });
 
 const myVakts = [
@@ -137,6 +147,7 @@ const myVakts = [
 ];
 
 let vakts = [...myVakts];
+
 vakts.forEach(vakt => {
   feed.addItem({
     title: vakt.title,
@@ -149,8 +160,33 @@ vakts.forEach(vakt => {
   });
 });
 
+feed2.addItem({
+  title: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
+  id: "https://vaktija.ba",
+  link: "https://vaktija.ba",
+  description:
+    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05",
+  content:
+    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05"
+  // date: vakt.date
+  // image: vakt.image
+});
+
+feed3.addItem({
+  title: "Sarajevo<br />pon, 13. april 2020 / 20. ša'ban 1441",
+  id: "https://vaktija.ba",
+  link: "https://vaktija.ba",
+  description:
+    "Zora 04:16<br />Izlazak sunca 06:02<br />Podne 12:48<br />Ikindija 16:31<br />Akšam 19:33<br />Jacija 21:05",
+  content:
+    "Zora 04:16<br />Izlazak sunca 06:02<br />Podne 12:48<br />Ikindija 16:31<br />Akšam 19:33<br />Jacija 21:05"
+  // date: vakt.date
+  // image: vakt.image
+});
+
 feed.addCategory("Religion");
 feed2.addCategory("Religion");
+feed3.addCategory("Religion");
 
 // console.log(feed.rss2());
 // Output: RSS 2.0
@@ -257,6 +293,11 @@ app.get("/rss", (req, res) => {
 app.get("/rss2", (req, res) => {
   res.type("application/xml");
   res.send(feed2.rss2());
+});
+
+app.get("/rss3", (req, res) => {
+  res.type("application/xml");
+  res.send(feed3.rss2());
 });
 
 app.get("/vaktija/v1", (req, res) =>
