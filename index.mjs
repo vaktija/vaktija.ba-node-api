@@ -35,168 +35,6 @@ const limiter = rateLimit({
     "Previse pokusaja, pokusajte malo kasnije ili kontaktirajte info@vaktija.ba za vise informacija."
 });
 
-const feed = new Feed.Feed({
-  title: "Vaktija.ba",
-  description: "Vaktija za Bosnu i Hercegovinu",
-  id: "https://vaktija.ba",
-  link: "https://vaktija.ba",
-  language: "en",
-  image: "http://vaktija.ba/icon.png",
-  favicon: "https://vaktija.ba/favicon.ico",
-  // copyright: "Vaktija.ba 2020",
-  // updated: new Date(), // optional, default = today
-  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
-  feedLinks: {
-    // json: "https://api.vaktija.ba"
-    // atom: "https://vaktija.com/atom"
-  },
-  author: {
-    name: "Vaktija.ba",
-    email: "info@vaktija.ba",
-    link: "https://vaktija.ba"
-  }
-});
-
-const feed2 = new Feed.Feed({
-  title: "Vaktija.ba",
-  description: "Vaktija za Bosnu i Hercegovinu",
-  id: "https://vaktija.ba",
-  link: "https://vaktija.ba",
-  language: "en",
-  image: "http://vaktija.ba/icon.png",
-  favicon: "https://vaktija.ba/favicon.ico",
-  // copyright: "Vaktija.ba 2020",
-  // updated: new Date(), // optional, default = today
-  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
-  feedLinks: {
-    // json: "https://api.vaktija.ba"
-    // atom: "https://vaktija.com/atom"
-  },
-  author: {
-    name: "Vaktija.ba",
-    email: "info@vaktija.ba",
-    link: "https://vaktija.ba"
-  }
-});
-
-const feed3 = new Feed.Feed({
-  title: "Vaktija.ba",
-  description: "Vaktija za Bosnu i Hercegovinu",
-  id: "https://vaktija.ba",
-  link: "https://vaktija.ba",
-  language: "en",
-  image: "http://vaktija.ba/icon.png",
-  favicon: "https://vaktija.ba/favicon.ico",
-  // copyright: "Vaktija.ba 2020",
-  // updated: new Date(), // optional, default = today
-  generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
-  feedLinks: {
-    // json: "https://api.vaktija.ba"
-    // atom: "https://vaktija.com/atom"
-  },
-  author: {
-    name: "Vaktija.ba",
-    email: "info@vaktija.ba",
-    link: "https://vaktija.ba"
-  }
-});
-
-const myVakts = [
-  {
-    title: "Sarajevo",
-    url: "https://vaktija.ba",
-    description: "pon, 13. april 2020 / 20. ša'ban 1441",
-    content: "pon, 13. april 2020 / 20. ša'ban 1441"
-  },
-  {
-    title: "Zora",
-    url: "https://vaktija.ba",
-    description: "04:16",
-    content: "04:16"
-  },
-  {
-    title: "Izlazak sunca",
-    url: "https://vaktija.ba",
-    description: "06:02",
-    content: "06:02"
-  },
-  {
-    title: "Podne",
-    url: "https://vaktija.ba",
-    description: "12:48",
-    content: "12:48"
-  },
-  {
-    title: "Ikindija",
-    url: "https://vaktija.ba",
-    description: "16:31",
-    content: "16:31"
-  },
-  {
-    title: "Akšam",
-    url: "https://vaktija.ba",
-    description: "19:33",
-    content: "19:33"
-  },
-  {
-    title: "Jacija",
-    url: "https://vaktija.ba",
-    description: "21:05",
-    content: "21:05"
-  }
-];
-
-let vakts = [...myVakts];
-
-vakts.forEach(vakt => {
-  feed.addItem({
-    title: vakt.title,
-    id: vakt.url,
-    link: vakt.url,
-    description: vakt.description,
-    content: vakt.content
-    // date: vakt.date
-    // image: vakt.image
-  });
-});
-
-feed2.addItem({
-  title: "Sarajevo pon, 13. april 2020 / 20. ša'ban 1441",
-  id: "https://vaktija.ba",
-  link: "https://vaktija.ba",
-  description:
-    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05",
-  content:
-    "Zora 04:16 Izlazak sunca 06:02 Podne 12:48 Ikindija 16:31 Akšam 19:33 Jacija 21:05"
-  // date: vakt.date
-  // image: vakt.image
-});
-
-feed3.addItem({
-  title: "Sarajevo, 20. ša'ban 1441",
-  id: "https://vaktija.ba",
-  link: "https://vaktija.ba",
-  description:
-    "Zora 04:16<br />Izlazak sunca 06:02<br />Podne 12:48<br />Ikindija 16:31<br />Akšam 19:33<br />Jacija 21:05",
-  content:
-    "Zora 04:16<br />Izlazak sunca 06:02<br />Podne 12:48<br />Ikindija 16:31<br />Akšam 19:33<br />Jacija 21:05"
-  // date: vakt.date
-  // image: vakt.image
-});
-
-feed.addCategory("Religion");
-feed2.addCategory("Religion");
-feed3.addCategory("Religion");
-
-// console.log(feed.rss2());
-// Output: RSS 2.0
-
-// console.log(feed.atom1());
-// Output: Atom 1.0
-
-// console.log(feed.json1());
-// Output: JSON Feed 1.0
-
 //  apply to all requests
 app.use(limiter);
 
@@ -285,19 +123,59 @@ app.get("/vaktija", (req, res) =>
 `)
 );
 
-app.get("/rss", (req, res) => {
+app.get("/rss/:location", (req, res) => {
+  const { location } = req.params;
+
+  const feed = new Feed.Feed({
+    title: "Vaktija.ba",
+    description: "Vaktija za Bosnu i Hercegovinu",
+    id: "https://vaktija.ba",
+    link: "https://vaktija.ba",
+    language: "en",
+    image: "http://vaktija.ba/icon.png",
+    favicon: "https://vaktija.ba/favicon.ico",
+    // copyright: "Vaktija.ba 2020",
+    // updated: new Date(), // optional, default = today
+    generator: "vaktija.ba", // optional, default = 'Feed for Node.js'
+    feedLinks: {
+      // json: "https://api.vaktija.ba"
+      // atom: "https://vaktija.com/atom"
+    },
+    author: {
+      name: "Vaktija.ba",
+      email: "info@vaktija.ba",
+      link: "https://vaktija.ba"
+    }
+  });
+
+  feed.addItem({
+    title: `${lokacija().lokacija[location]}, ${moment()
+      .format("iD. iMMMM iYYYY")
+      .toLowerCase()}`,
+    id: "https://vaktija.ba",
+    link: "https://vaktija.ba",
+    description: `Zora ${dnevna(location).vakat[0]}<br />Izlazak sunca ${
+      dnevna(location).vakat[1]
+    }<br />Podne ${dnevna(location).vakat[2]}<br />Ikindija ${
+      dnevna(location).vakat[3]
+    }<br />Akšam ${dnevna(location).vakat[4]}<br />Jacija ${
+      dnevna(location).vakat[5]
+    }`,
+    content: `Zora ${dnevna(location).vakat[0]}<br />Izlazak sunca ${
+      dnevna(location).vakat[1]
+    }<br />Podne ${dnevna(location).vakat[2]}<br />Ikindija ${
+      dnevna(location).vakat[3]
+    }<br />Akšam ${dnevna(location).vakat[4]}<br />Jacija ${
+      dnevna(location).vakat[5]
+    }`
+    // date: vakt.date
+    // image: vakt.image
+  });
+
+  feed.addCategory("Religion");
+
   res.type("application/xml");
   res.send(feed.rss2());
-});
-
-app.get("/rss2", (req, res) => {
-  res.type("application/xml");
-  res.send(feed2.rss2());
-});
-
-app.get("/rss3", (req, res) => {
-  res.type("application/xml");
-  res.send(feed3.rss2());
 });
 
 app.get("/vaktija/v1", (req, res) =>
