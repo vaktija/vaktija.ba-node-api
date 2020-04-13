@@ -173,7 +173,7 @@ feed2.addItem({
 });
 
 feed3.addItem({
-  title: "Sarajevo<br />pon, 13. april 2020 / 20. ša'ban 1441",
+  title: "Sarajevo, 20. ša'ban 1441",
   id: "https://vaktija.ba",
   link: "https://vaktija.ba",
   description:
