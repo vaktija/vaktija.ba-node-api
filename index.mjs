@@ -98,7 +98,7 @@ app.get("/:location/:year/:month", (req, res, next) => {
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-      <title>${location} Vaktija</title>
+      <title>${lokacija().lokacija[location]} - Vaktija</title>
   
       <!-- Bootstrap -->
       <link
@@ -162,7 +162,7 @@ app.get("/:location/:year/:month", (req, res, next) => {
               <table class="table table-hover table-condensed table-responsive">
                   <thead>
                       <tr>
-                          <th style="width:30%;" colSpan=3>dan</th>
+                          <th style="width:35%;" colSpan=3>dan</th>
                           <th>zora</th>
                           <th>izlazak sunca</th>
                           <th>podne</th>
@@ -179,17 +179,17 @@ app.get("/:location/:year/:month", (req, res, next) => {
                         .tz("Europe/Sarajevo")
                         .format("ddd")
                         .toLowerCase() === "pet"
-                        ? `<tr style="background-color:#f5f5f5; font-weight: bold">
-                        <td style="text-align:center">${
+                        ? `<tr style="background-color:#f5f5f5; font-weight: bold; vertical-align: middle;">
+                        <td style="font-size: large; text-align:center; padding-left:15px;">${
                           index + 1
                         }</td>                       
-                        <td style="text-align:center">
+                        <td style="text-align:center; vertical-align: middle;">
 ${moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
   .tz("Europe/Sarajevo")
   .format("ddd")
   .toLowerCase()}
 </td>
-<td>
+<td style="font-size: medium; vertical-align: middle">
 ${
   moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
     .tz("Europe/Sarajevo")
@@ -214,7 +214,7 @@ ${
                       <td class="monthly text-center">${d.vakat[5]}</td>
                     </tr>`
                         : `<tr>
-                        <td style="font-weight: bold; text-align:center">${
+                        <td style="font-size: large; font-weight: bold; text-align:center; padding-left:15px">${
                           index + 1
                         }</td>
 
