@@ -1,0 +1,15 @@
+th {
+  text-align: center;
+  margin: 10px;
+  font-size: large;
+  vertical-align: middle;
+}
+td {
+  font-size: large;
+  vertical-align: middle;
+}
+
+tr {
+  font-size: large;
+  vertical-align: middle;
+}

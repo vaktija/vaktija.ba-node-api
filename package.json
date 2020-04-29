@@ -12,6 +12,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --experimental-json-modules index.mjs"
+    "start": "node --experimental-modules --experimental-json-modules index.mjs",
+    "dev": "nodemon --experimental-modules --experimental-json-modules index.mjs"
   }
 }
