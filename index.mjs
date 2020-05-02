@@ -2,8 +2,6 @@ import express from "express";
 import "moment-duration-format";
 import moment from "moment-hijri";
 import "moment-timezone";
-import rateLimit from "express-rate-limit";
-
 import { mjesecna, lokacija } from "./api/vaktija/index.mjs";
 
 moment.updateLocale("bs", {
@@ -24,71 +22,17 @@ moment.updateLocale("bs", {
   weekdaysShort: ["ned", "pon", "uto", "sri", "čet", "pet", "sub"]
 });
 
-// console.log();
-
 const app = express();
-
-// app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message:
-    "Previse pokusaja, pokusajte malo kasnije ili kontaktirajte info@vaktija.ba za vise informacija."
-});
 
 app.use(express.static("public"));
 
-//  apply to all requests
-app.use(limiter);
-
-app.use((req, res, next) => {
-  // res.header("Access-Control-Allow-Origin", "*");
-  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  // next();
-
-  res.set("Access-Control-Allow-Origin", "*");
-  // res.set('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, X-Requested-With, auth_token, X-CSRF-Token, Authorization');
-  res.set(
-    "Access-Control-Allow-Headers",
-    "Origin, Accept, Content-Type, X-Requested-With"
-  );
-  // res.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
-  res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-  // res.set('Access-Control-Allow-Credentials', 'true');
-
-  // intercept OPTIONS method
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-  next();
-});
-
-// app.get("/", (req, res) => res.send("vaktija.ba API"));
-
-app.get("/", (req, res) =>
-  res.send({
-    lokacija: "Sarajevo",
-    datum: [
-      moment().format("iD. iMMMM iYYYY").toLowerCase(),
-      moment().format("dddd, D. MMMM YYYY")
-    ],
-    vakat: dnevna().vakat
-  })
-);
+app.get("/", (req, res) => res.send("/:location/:year/:month"));
 
 app.get("/:location/:year/:month", (req, res, next) => {
-  let { location, year, month } = req.params;
-
+  const { location, year, month } = req.params;
   const monthlyVaktija = mjesecna(location, year, month);
-
-  // {
-  //   id: Number(location),
-  //   lokacija: lokacija().lokacija[location],
-  //   godina: Number(year),
-  //   mjesec: Number(month),
-  //   dan: mjesecna(location, year, month).dan
-  // }
+  const grad = lokacija().lokacija[location];
+  const vaktijaZa = moment([year, month - 1]).format("MMMM YYYY");
 
   res.send(`
   <!DOCTYPE html>
@@ -98,7 +42,7 @@ app.get("/:location/:year/:month", (req, res, next) => {
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-      <title>${lokacija().lokacija[location]} - Vaktija</title>
+      <title>${grad} - Vaktija</title>
   
       <!-- Bootstrap -->
       <link
@@ -121,151 +65,167 @@ app.get("/:location/:year/:month", (req, res, next) => {
       <![endif]-->
     </head>
     <body>
+
     <div class="container">
+  
+        <br />    
+        <br />
+
         <div class="row">
-            <div class="col-lg-6 col-lg-offset-3">
+            <div class="col-lg-12">
                 <img class="img-responsive center-block" alt="logo" src="/logo.svg" /></a>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-
+        
         <br />
-
+        
+        <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <div class="col-lg-6 print">
-                    <blockquote class="col-lg-10">
-                        <p>i koji molitve svoje na vrijeme obavljaju</p>
-                        <footer>23:9 (El-Mu’minūn – Vjernici)</footer>
-                    </blockquote>
-                </div>
-                <div class="col-lg-6 print">
-                    <h1 style="color:#cacaca; font-weight:400; text-transform: lowercase; font-size: 4.5em" class="col-lg-12 text-right location print">${
-                      lokacija().lokacija[location]
-                    }</h1>
+              <div class="row">
+                <div class="col-lg-6">
+                        <blockquote>
+                            <p>i koji molitve svoje na vrijeme obavljaju</p>
+                            <footer>23:9 (El-Mu’minūn – Vjernici)</footer>
+                        </blockquote>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="text-right">${grad}</h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<br />
-    <div class="container">
-      <div class="row">
-          <h1 style="color:#cacaca; font-weight:400; font-size: 4em" class="text-center text-lowercase jacija">${moment(
-            [year, month - 1]
-          ).format("MMMM YYYY")}</h1>
-      </div>
-      <br />
-
-      <div class="row">
-          <t class="col-lg-10 col-lg-offset-1">
-              <table class="table table-hover table-condensed table-responsive">
-                  <thead>
-                      <tr>
-                          <th style="width:35%;" colSpan=3>dan</th>
-                          <th>zora</th>
-                          <th>izlazak sunca</th>
-                          <th>podne</th>
-                          <th>ikindija</th>
-                          <th>akšam</th>
-                          <th>jacija</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-                  ${monthlyVaktija.dan
-                    .map((d, index) =>
-                      moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-                        .tz("Europe/Sarajevo")
-                        .format("ddd")
-                        .toLowerCase() === "pet"
-                        ? `<tr style="background-color:#f5f5f5; font-weight: bold; vertical-align: middle;">
-                        <td style="font-size: large; text-align:center; padding-left:15px;">${
-                          index + 1
-                        }</td>                       
-                        <td style="text-align:center; vertical-align: middle;">
-${moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-  .tz("Europe/Sarajevo")
-  .format("ddd")
-  .toLowerCase()}
-</td>
-<td style="font-size: medium; vertical-align: middle">
-${
-  moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-    .tz("Europe/Sarajevo")
-    .format("iD")
-    .toLowerCase() === "1" || index === 0
-    ? moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-        .tz("Europe/Sarajevo")
-        .format("iD. iMMMM iYYYY")
-        .toLowerCase()
-    : moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-        .tz("Europe/Sarajevo")
-        .format("iD")
-        .toLowerCase()
-}
-  </td>
-                        </td>     
-                      <td class="monthly text-center">${d.vakat[0]}</td>
-                      <td class="monthly text-center">${d.vakat[1]}</td>
-                      <td class="monthly text-center">${d.vakat[2]}</td>
-                      <td class="monthly text-center">${d.vakat[3]}</td>
-                      <td class="monthly text-center">${d.vakat[4]}</td>
-                      <td class="monthly text-center">${d.vakat[5]}</td>
-                    </tr>`
-                        : `<tr>
-                        <td style="font-size: large; font-weight: bold; text-align:center; padding-left:15px">${
-                          index + 1
-                        }</td>
-
-                        
-                        <td style="text-align:center">
-${moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-  .tz("Europe/Sarajevo")
-  .format("ddd")
-  .toLowerCase()}
-</td>
-                       
-
-<td>
-${
-  moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-    .tz("Europe/Sarajevo")
-    .format("iD")
-    .toLowerCase() === "1" || index === 0
-    ? moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-        .tz("Europe/Sarajevo")
-        .format("iD. iMMMM iYYYY")
-        .toLowerCase()
-    : moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
-        .tz("Europe/Sarajevo")
-        .format("iD")
-        .toLowerCase()
-}
-  </td>
-                        </td>
-                      
-
-
-                                   
-                      <td class="monthly text-center">${d.vakat[0]}</td>
-                      <td class="monthly text-center">${d.vakat[1]}</td>
-                      <td class="monthly text-center">${d.vakat[2]}</td>
-                      <td class="monthly text-center">${d.vakat[3]}</td>
-                      <td class="monthly text-center">${d.vakat[4]}</td>
-                      <td class="monthly text-center">${d.vakat[5]}</td>
-                    </tr>`
-                    )
-                    .join("")}
-                  </tbody>
-              </table>
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="text-center">${vaktijaZa}</h2>
           </div>
-      </div>
-  </div>
+        </div>
 
-<br />
+        <br />
 
-  <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th colSpan=3>dan</th>
+                            <th>zora</th>
+                            <th>izlazak sunca</th>
+                            <th>podne</th>
+                            <th>ikindija</th>
+                            <th>akšam</th>
+                            <th>jacija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    ${monthlyVaktija.dan
+                      .map((d, index) =>
+                        moment(`${year}-${month}-${index + 1}`, "YYYY-M-D")
+                          .tz("Europe/Sarajevo")
+                          .format("ddd")
+                          .toLowerCase() === "pet"
+                          ? `<tr class="p">
+                                <td class="g">${index + 1}</td>     
+                                                  
+                                <td class="d">
+                                ${moment(
+                                  `${year}-${month}-${index + 1}`,
+                                  "YYYY-M-D"
+                                )
+                                  .tz("Europe/Sarajevo")
+                                  .format("ddd")
+                                  .toLowerCase()}
+                                </td>
+
+                                <td class="h">
+                                ${
+                                  moment(
+                                    `${year}-${month}-${index + 1}`,
+                                    "YYYY-M-D"
+                                  )
+                                    .tz("Europe/Sarajevo")
+                                    .format("iD")
+                                    .toLowerCase() === "1" || index === 0
+                                    ? moment(
+                                        `${year}-${month}-${index + 1}`,
+                                        "YYYY-M-D"
+                                      )
+                                        .tz("Europe/Sarajevo")
+                                        .format("iD. iMMMM iYYYY")
+                                        .toLowerCase()
+                                    : moment(
+                                        `${year}-${month}-${index + 1}`,
+                                        "YYYY-M-D"
+                                      )
+                                        .tz("Europe/Sarajevo")
+                                        .format("iD")
+                                        .toLowerCase()
+                                }
+                                </td>
+
+                                <td>${d.vakat[0]}</td>
+                                <td>${d.vakat[1]}</td>
+                                <td>${d.vakat[2]}</td>
+                                <td>${d.vakat[3]}</td>
+                                <td>${d.vakat[4]}</td>
+                                <td>${d.vakat[5]}</td>
+                            </tr>`
+                          : `<tr>
+                                  <td class="g">${index + 1}</td>
+
+                                  <td class="d">
+                                    ${moment(
+                                      `${year}-${month}-${index + 1}`,
+                                      "YYYY-M-D"
+                                    )
+                                      .tz("Europe/Sarajevo")
+                                      .format("ddd")
+                                      .toLowerCase()}
+                                  </td>
+                                
+                                  <td class="h">
+                                  ${
+                                    moment(
+                                      `${year}-${month}-${index + 1}`,
+                                      "YYYY-M-D"
+                                    )
+                                      .tz("Europe/Sarajevo")
+                                      .format("iD")
+                                      .toLowerCase() === "1" || index === 0
+                                      ? moment(
+                                          `${year}-${month}-${index + 1}`,
+                                          "YYYY-M-D"
+                                        )
+                                          .tz("Europe/Sarajevo")
+                                          .format("iD. iMMMM iYYYY")
+                                          .toLowerCase()
+                                      : moment(
+                                          `${year}-${month}-${index + 1}`,
+                                          "YYYY-M-D"
+                                        )
+                                          .tz("Europe/Sarajevo")
+                                          .format("iD")
+                                          .toLowerCase()
+                                  }
+                                  </td>
+                                    
+                                  <td>${d.vakat[0]}</td>
+                                  <td>${d.vakat[1]}</td>
+                                  <td>${d.vakat[2]}</td>
+                                  <td>${d.vakat[3]}</td>
+                                  <td>${d.vakat[4]}</td>
+                                  <td>${d.vakat[5]}</td>
+                              </tr>`
+                      )
+                      .join("")}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br />
+
         <div class="row">
             <div class="col-lg-12 text-center">
                 <a href="https://play.google.com/store/apps/details?id=ba.vaktija.android">
@@ -276,17 +236,16 @@ ${
                     <img class="img-rounded" alt="Microsoft" src="/img/microsoft-badge.png" height="40" /></a>
             </div>
         </div>
-    </div>
 
-    <br />
-
-    <div class="container">
+        <br />
+        
         <div class="row">
             <div class="col-lg-12">
-                <h5 style="color:#404040; font-weight: 400" class="text-center text-lowercase"><span>vaktija.ba 2008 - ${year}</span>
-                </h5>
+                <p class="text-center"><span>vaktija.ba 2008 - ${year}</span>
+                </p>
             </div>
         </div>
+
     </div>
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -303,7 +262,6 @@ ${
       ></script>
     </body>
   </html>
-  
   `);
 });
 
